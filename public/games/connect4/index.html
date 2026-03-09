@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>4 en Raya - Peques</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: white;
+      font-size: 2rem;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .turn-indicator {
+      color: white;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+    }
+
+    .turn-indicator .player-color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-left: 8px;
+      border: 2px solid white;
+    }
+
+    .board {
+      background: #2563eb;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), inset 0 2px 0 rgba(255,255,255,0.2);
+    }
+
+    .row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .row:not(:last-child) {
+      margin-bottom: 8px;
+    }
+
+    .cell {
+      width: 50px;
+      height: 50px;
+      background: #1e40af;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .cell:hover:not(.red):not(.yellow) {
+      background: #3b82f6;
+      transform: scale(1.05);
+    }
+
+    .cell.red {
+      background: radial-gradient(circle at 30% 30%, #f87171, #dc2626);
+      box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .cell.yellow {
+      background: radial-gradient(circle at 30% 30%, #fde047, #eab308);
+      box-shadow: inset 0 -4px 8px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .cell.winning {
+      animation: pulse 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+
+    .column-hover {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .column-indicator {
+      width: 50px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      color: rgba(255,255,255,0.5);
+      font-size: 1.2rem;
+    }
+
+    .column-indicator:hover {
+      background: rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .game-over {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      z-index: 100;
+    }
+
+    .game-over.hidden {
+      display: none;
+    }
+
+    .game-over h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .game-over .winner-color {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      border: 4px solid white;
+    }
+
+    button {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 12px 32px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 20px rgba(255,255,255,0.3);
+    }
+
+    .reset-btn {
+      margin-top: 20px;
+    }
+
+    @media (max-width: 450px) {
+      .cell {
+        width: 40px;
+        height: 40px;
+      }
+      .column-indicator {
+        width: 40px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .turn-indicator {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>4 en Raya</h1>
+  <div class="turn-indicator">
+    Turno: <span id="current-player">Rojo</span>
+    <span class="player-color" id="current-color" style="background: #dc2626;"></span>
+  </div>
+
+  <div class="board">
+    <div class="column-hover" id="column-indicators"></div>
+    <div id="game-board"></div>
+  </div>
+
+  <button class="reset-btn" onclick="resetGame()">Reiniciar Juego</button>
+
+  <div class="game-over hidden" id="game-over">
+    <div class="winner-color" id="winner-color"></div>
+    <h2 id="winner-text"></h2>
+    <button onclick="resetGame()">Jugar de Nuevo</button>
+  </div>
+
+  <script>
+    const ROWS = 6;
+    const COLS = 7;
+    let board = [];
+    let currentPlayer = 'red';
+    let gameActive = true;
+
+    function initBoard() {
+      board = Array(ROWS).fill(null).map(() => Array(COLS).fill(null));
+      renderBoard();
+      renderColumnIndicators();
+      updateTurnIndicator();
+      gameActive = true;
+      document.getElementById('game-over').classList.add('hidden');
+    }
+
+    function renderBoard() {
+      const boardEl = document.getElementById('game-board');
+      boardEl.innerHTML = '';
+
+      for (let row = 0; row < ROWS; row++) {
+        const rowEl = document.createElement('div');
+        rowEl.className = 'row';
+
+        for (let col = 0; col < COLS; col++) {
+          const cellEl = document.createElement('div');
+          cellEl.className = 'cell';
+          if (board[row][col]) {
+            cellEl.classList.add(board[row][col]);
+          }
+          cellEl.dataset.row = row;
+          cellEl.dataset.col = col;
+          cellEl.onclick = () => dropPiece(col);
+          rowEl.appendChild(cellEl);
+        }
+
+        boardEl.appendChild(rowEl);
+      }
+    }
+
+    function renderColumnIndicators() {
+      const indicatorsEl = document.getElementById('column-indicators');
+      indicatorsEl.innerHTML = '';
+
+      for (let col = 0; col < COLS; col++) {
+        const indicator = document.createElement('div');
+        indicator.className = 'column-indicator';
+        indicator.innerHTML = '&#9660;';
+        indicator.onclick = () => dropPiece(col);
+        indicatorsEl.appendChild(indicator);
+      }
+    }
+
+    function updateTurnIndicator() {
+      const playerEl = document.getElementById('current-player');
+      const colorEl = document.getElementById('current-color');
+
+      playerEl.textContent = currentPlayer === 'red' ? 'Rojo' : 'Amarillo';
+      colorEl.style.background = currentPlayer === 'red' ? '#dc2626' : '#eab308';
+    }
+
+    function dropPiece(col) {
+      if (!gameActive) return;
+
+      // Find the lowest empty row in this column
+      let targetRow = -1;
+      for (let row = ROWS - 1; row >= 0; row--) {
+        if (!board[row][col]) {
+          targetRow = row;
+          break;
+        }
+      }
+
+      if (targetRow === -1) return; // Column is full
+
+      // Place the piece
+      board[targetRow][col] = currentPlayer;
+      renderBoard();
+
+      // Check for win
+      const winningCells = checkWin(targetRow, col);
+      if (winningCells) {
+        gameActive = false;
+        highlightWinningCells(winningCells);
+        showGameOver(currentPlayer);
+        return;
+      }
+
+      // Check for draw
+      if (checkDraw()) {
+        gameActive = false;
+        showGameOver(null);
+        return;
+      }
+
+      // Switch player
+      currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
+      updateTurnIndicator();
+    }
+
+    function checkWin(row, col) {
+      const directions = [
+        [[0, 1], [0, -1]],  // Horizontal
+        [[1, 0], [-1, 0]],  // Vertical
+        [[1, 1], [-1, -1]], // Diagonal \
+        [[1, -1], [-1, 1]]  // Diagonal /
+      ];
+
+      for (const [[dr1, dc1], [dr2, dc2]] of directions) {
+        const cells = [[row, col]];
+
+        // Check in first direction
+        let r = row + dr1, c = col + dc1;
+        while (r >= 0 && r < ROWS && c >= 0 && c < COLS && board[r][c] === currentPlayer) {
+          cells.push([r, c]);
+          r += dr1;
+          c += dc1;
+        }
+
+        // Check in second direction
+        r = row + dr2;
+        c = col + dc2;
+        while (r >= 0 && r < ROWS && c >= 0 && c < COLS && board[r][c] === currentPlayer) {
+          cells.push([r, c]);
+          r += dr2;
+          c += dc2;
+        }
+
+        if (cells.length >= 4) {
+          return cells;
+        }
+      }
+
+      return null;
+    }
+
+    function checkDraw() {
+      return board[0].every(cell => cell !== null);
+    }
+
+    function highlightWinningCells(cells) {
+      const boardEl = document.getElementById('game-board');
+      cells.forEach(([row, col]) => {
+        const cellEl = boardEl.children[row].children[col];
+        cellEl.classList.add('winning');
+      });
+    }
+
+    function showGameOver(winner) {
+      const gameOverEl = document.getElementById('game-over');
+      const winnerTextEl = document.getElementById('winner-text');
+      const winnerColorEl = document.getElementById('winner-color');
+
+      if (winner) {
+        winnerTextEl.textContent = `${winner === 'red' ? 'Rojo' : 'Amarillo'} gana!`;
+        winnerColorEl.style.background = winner === 'red' ? '#dc2626' : '#eab308';
+        winnerColorEl.style.display = 'block';
+      } else {
+        winnerTextEl.textContent = 'Empate!';
+        winnerColorEl.style.display = 'none';
+      }
+
+      gameOverEl.classList.remove('hidden');
+    }
+
+    function resetGame() {
+      currentPlayer = 'red';
+      initBoard();
+    }
+
+    // Initialize game
+    initBoard();
+  </script>
+</body>
+</html>

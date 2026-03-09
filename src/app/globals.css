@@ -1,0 +1,537 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-yellow: var(--yellow);
+  --color-blue: var(--blue);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.64 0.15 275);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.75 0.18 55);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.78 0.16 145);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.6 0.2 25);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.64 0.15 275);
+  --chart-1: oklch(0.64 0.15 275);
+  --chart-2: oklch(0.75 0.18 55);
+  --chart-3: oklch(0.78 0.16 145);
+  --chart-4: oklch(0.92 0.18 100);
+  --chart-5: oklch(0.8 0.12 230);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.64 0.15 275);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.64 0.15 275);
+  --yellow: oklch(0.92 0.18 100);
+  --blue: oklch(0.8 0.12 230);
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.7 0.16 275);
+  --primary-foreground: oklch(0.145 0 0);
+  --secondary: oklch(0.72 0.18 55);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.75 0.16 145);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.65 0.19 25);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.7 0.16 275);
+  --chart-1: oklch(0.7 0.16 275);
+  --chart-2: oklch(0.72 0.18 55);
+  --chart-3: oklch(0.75 0.16 145);
+  --chart-4: oklch(0.88 0.18 100);
+  --chart-5: oklch(0.76 0.12 230);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.7 0.16 275);
+  --sidebar-primary-foreground: oklch(0.145 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.7 0.16 275);
+  --yellow: oklch(0.88 0.18 100);
+  --blue: oklch(0.76 0.12 230);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ============================================
+   RAINBOW BRAND SYSTEM - Hazlo con Peques
+   ============================================ */
+
+:root {
+  /* Rainbow Color Tokens */
+  --rainbow-1: #FF3B30; /* Rojo */
+  --rainbow-2: #FF9500; /* Naranja */
+  --rainbow-3: #FFCC00; /* Amarillo */
+  --rainbow-4: #34C759; /* Verde */
+  --rainbow-5: #007AFF; /* Azul */
+  --rainbow-6: #5856D6; /* Índigo */
+  --rainbow-7: #AF52DE; /* Violeta */
+
+  /* Rainbow Gradients */
+  --gradient-rainbow: linear-gradient(
+    90deg,
+    var(--rainbow-1),
+    var(--rainbow-2),
+    var(--rainbow-3),
+    var(--rainbow-4),
+    var(--rainbow-5),
+    var(--rainbow-6),
+    var(--rainbow-7)
+  );
+
+  --gradient-rainbow-soft: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--rainbow-1) 35%, white),
+    color-mix(in srgb, var(--rainbow-3) 35%, white),
+    color-mix(in srgb, var(--rainbow-5) 35%, white),
+    color-mix(in srgb, var(--rainbow-7) 35%, white)
+  );
+
+  --gradient-rainbow-vivid: linear-gradient(
+    90deg,
+    var(--rainbow-1),
+    var(--rainbow-2),
+    var(--rainbow-3),
+    var(--rainbow-4),
+    var(--rainbow-5),
+    var(--rainbow-6),
+    var(--rainbow-7),
+    var(--rainbow-1)
+  );
+
+  /* Rainbow glow shadow */
+  --shadow-rainbow:
+    0 0 20px color-mix(in srgb, var(--rainbow-1) 15%, transparent),
+    0 0 40px color-mix(in srgb, var(--rainbow-4) 10%, transparent),
+    0 0 60px color-mix(in srgb, var(--rainbow-7) 8%, transparent);
+
+  --shadow-rainbow-intense:
+    0 4px 20px color-mix(in srgb, var(--rainbow-1) 25%, transparent),
+    0 4px 40px color-mix(in srgb, var(--rainbow-4) 20%, transparent),
+    0 4px 60px color-mix(in srgb, var(--rainbow-7) 15%, transparent);
+}
+
+/* Rainbow Animation Keyframes */
+@keyframes rainbow-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes rainbow-glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes rainbow-border-spin {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* ============================================
+   RAINBOW UTILITY CLASSES
+   ============================================ */
+
+/* Rainbow Text - Gradient text effect */
+.rainbow-text {
+  background: var(--gradient-rainbow);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--rainbow-5); /* Fallback */
+}
+
+.rainbow-text-animated {
+  background: var(--gradient-rainbow-vivid);
+  background-size: 400% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-shift 8s ease-in-out infinite;
+}
+
+/* Rainbow Border - Using pseudo-element technique */
+.rainbow-border {
+  position: relative;
+  background: var(--background);
+  border-radius: var(--radius);
+}
+
+.rainbow-border::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--gradient-rainbow);
+  border-radius: calc(var(--radius) + 2px);
+  z-index: -1;
+  opacity: 0.8;
+}
+
+.rainbow-border-animated::before {
+  background: var(--gradient-rainbow-vivid);
+  background-size: 400% auto;
+  animation: rainbow-shift 10s ease-in-out infinite;
+}
+
+/* Rainbow Border Thin - Subtle version */
+.rainbow-border-thin {
+  position: relative;
+}
+
+.rainbow-border-thin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-rainbow);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Rainbow Glow - Soft multicolor shadow */
+.rainbow-glow {
+  box-shadow: var(--shadow-rainbow);
+}
+
+.rainbow-glow-intense {
+  box-shadow: var(--shadow-rainbow-intense);
+}
+
+.rainbow-glow:hover {
+  box-shadow: var(--shadow-rainbow-intense);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Rainbow Hero Background */
+.rainbow-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.rainbow-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-rainbow-soft);
+  opacity: 0.12;
+  z-index: 0;
+}
+
+.rainbow-hero-intense::before {
+  opacity: 0.2;
+}
+
+/* Rainbow Pill/Badge */
+.rainbow-pill {
+  background: var(--gradient-rainbow);
+  background-size: 200% auto;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.rainbow-pill-soft {
+  background: var(--gradient-rainbow-soft);
+  color: var(--foreground);
+}
+
+/* Rainbow Ring - For badges/highlights */
+.rainbow-ring {
+  position: relative;
+}
+
+.rainbow-ring::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  background: var(--gradient-rainbow);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.rainbow-ring:hover::before,
+.rainbow-ring.active::before {
+  opacity: 0.6;
+}
+
+/* Rainbow Line - For underlines and separators */
+.rainbow-line {
+  height: 3px;
+  background: var(--gradient-rainbow);
+  border-radius: 2px;
+}
+
+.rainbow-line-thin {
+  height: 2px;
+  background: var(--gradient-rainbow);
+  border-radius: 1px;
+}
+
+.rainbow-line-animated {
+  background: var(--gradient-rainbow-vivid);
+  background-size: 400% auto;
+  animation: rainbow-shift 8s ease-in-out infinite;
+}
+
+/* Rainbow Button */
+.rainbow-button {
+  background: var(--gradient-rainbow);
+  background-size: 200% auto;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.15);
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px color-mix(in srgb, var(--rainbow-5) 30%, transparent);
+}
+
+.rainbow-button:hover {
+  background-position: right center;
+  box-shadow: 0 6px 25px color-mix(in srgb, var(--rainbow-5) 40%, transparent);
+  transform: translateY(-2px);
+}
+
+.rainbow-button:active {
+  transform: translateY(0);
+}
+
+.rainbow-button:disabled {
+  background: var(--muted);
+  color: var(--muted-foreground);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Rainbow Card Accent */
+.rainbow-card-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.rainbow-card-accent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-rainbow);
+}
+
+.rainbow-card-accent:hover {
+  box-shadow: var(--shadow-rainbow);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Rainbow Corner Accent */
+.rainbow-corner {
+  position: relative;
+  overflow: hidden;
+}
+
+.rainbow-corner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-rainbow);
+  opacity: 0.2;
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  transition: opacity 0.3s ease;
+}
+
+.rainbow-corner:hover::before {
+  opacity: 0.4;
+}
+
+/* Rainbow Blobs - For playful backgrounds */
+.rainbow-blobs {
+  position: relative;
+  overflow: hidden;
+}
+
+.rainbow-blobs::before,
+.rainbow-blobs::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.rainbow-blobs::before {
+  width: 400px;
+  height: 400px;
+  background: var(--rainbow-1);
+  top: -100px;
+  left: -100px;
+}
+
+.rainbow-blobs::after {
+  width: 350px;
+  height: 350px;
+  background: var(--rainbow-5);
+  bottom: -100px;
+  right: -100px;
+}
+
+.rainbow-blobs-intense::before,
+.rainbow-blobs-intense::after {
+  opacity: 0.15;
+}
+
+/* Rainbow Underline - For active nav items */
+.rainbow-underline {
+  position: relative;
+}
+
+.rainbow-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-rainbow);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.rainbow-underline:hover::after,
+.rainbow-underline.active::after {
+  transform: scaleX(1);
+}
+
+/* Rainbow Stepper - Progress indicators */
+.rainbow-step-active {
+  background: var(--gradient-rainbow) !important;
+  color: white !important;
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--rainbow-5) 40%, transparent);
+}
+
+.rainbow-step-completed {
+  background: var(--gradient-rainbow-soft) !important;
+  color: var(--foreground) !important;
+}
+
+/* Peque Mode - More intense rainbow for kids */
+.peque-mode .rainbow-button {
+  background-size: 300% auto;
+  box-shadow: var(--shadow-rainbow-intense);
+}
+
+.peque-mode .rainbow-hero::before {
+  opacity: 0.25;
+}
+
+.peque-mode .rainbow-card-accent::before {
+  height: 6px;
+}
+
+.peque-mode .rainbow-glow {
+  box-shadow: var(--shadow-rainbow-intense);
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .rainbow-text-animated,
+  .rainbow-border-animated::before,
+  .rainbow-line-animated {
+    animation: none;
+    background-size: 100% auto;
+  }
+
+  .rainbow-button:hover {
+    transform: none;
+  }
+}
