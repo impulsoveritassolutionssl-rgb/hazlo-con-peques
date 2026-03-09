@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "name": "hazlo-con-peques",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "env": {
+    "TOTALUM_API_KEY": "@totalum-api-key",
+    "BETTER_AUTH_SECRET": "@better-auth-secret",
+    "NEXT_PUBLIC_APP_URL": "@next-public-app-url"
+  }
+}
