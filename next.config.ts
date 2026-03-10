@@ -2,7 +2,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -21,11 +20,9 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  allowedDevOrigins: ["*"],
   async headers() {
     return [
       {
-        // Apply to all routes
         source: '/:path*',
         headers: [
           {
@@ -34,12 +31,10 @@ const nextConfig: NextConfig = {
           },
           { key: "Pragma", value: "no-cache" },
           { key: "Expires", value: "0" },
-          // 🚨 CRITICAL: Allow iframe embedding from specific domains + frame-src for external games
           {
             key: 'Content-Security-Policy',
             value: "frame-ancestors 'self' https://web.totalum.app https://totalum-frontend-test.web.app http://localhost:8100; frame-src 'self' https://claude.ai https://*.claude.ai https://studio--studio-7562023643-58b09.us-central1.hosted.app blob: data:; child-src 'self' https://claude.ai https://*.claude.ai blob:",
           },
-          // Don't set X-Frame-Options as CSP frame-ancestors takes precedence
         ],
       },
     ];
@@ -47,15 +42,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-// added by create cloudflare to enable calling `getCloudflareContext()` in `next dev`
-// conditionally initialize based on environment variable
-if (process.env.DISABLE_OPENNEXT !== 'true') {
-  try {
-    const { initOpenNextCloudflareForDev } = require("@opennextjs/cloudflare");
-    initOpenNextCloudflareForDev();
-  } catch (error) {
-    console.warn("OpenNext Cloudflare dev initialization failed:", error instanceof Error ? error.message : String(error));
-    console.warn("Falling back to standard Next.js development mode");
-  }
-}

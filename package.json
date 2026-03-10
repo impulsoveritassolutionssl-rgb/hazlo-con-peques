@@ -1,18 +1,16 @@
 {
-  "name": "nextjs-totalum-project",
-  "description": "Build a full-stack web application with Next.js and Totalum.",
+  "name": "hazlo-con-peques",
+  "description": "Plataforma SaaS para organización de eventos infantiles",
+  "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
-    "check-types-errors": "tsc --noEmit --skipLibCheck",
-    "start": "next start",
     "build": "next build",
-    "pages:build": "npx @cloudflare/next-on-pages@1",
-    "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static",
-    "cloudflare-build": "opennextjs-cloudflare build",
-    "cloudflare-deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "start": "next start",
+    "check-types-errors": "tsc --noEmit --skipLibCheck",
     "setup:stripe-webhook": "ts-node scripts/setup-stripe-webhook.ts"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "cloudflare": {
     "label": "Totalum App",
